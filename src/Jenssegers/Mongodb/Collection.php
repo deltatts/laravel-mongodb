@@ -58,19 +58,20 @@ class Collection {
 
         //$result = call_user_func_array(array($this->collection, $method), $parameters);
 
+        // correction: fix for all PHP versions
         // Fix for PHP7
         // https://github.com/LearningLocker/learninglocker/issues/893#issue-203456708
         // based on https://github.com/alcaeus/mongo-php-adapter/issues/107#issuecomment-219393254
-        if (PHP_VERSION_ID >= 70000 && in_array($method, array('insert', 'batchInsert', 'save'))) {
+        // if (PHP_VERSION_ID >= 70000 && in_array($method, array('insert', 'batchInsert', 'save'))) {
             $saveData = array_shift($parameters);
             $saveParams = array_shift($parameters);
             if (NULL==$saveParams) {
                 $saveParams = array();
             }
             $result = call_user_func_array(array($this->collection, $method), array(&$saveData, $saveParams));
-        } else {
-            $result = call_user_func_array(array($this->collection, $method), $parameters);
-        }
+        // } else {
+        //     $result = call_user_func_array(array($this->collection, $method), $parameters);
+        // }
 
 
         // Once we have run the query we will calculate the time that it took to run and

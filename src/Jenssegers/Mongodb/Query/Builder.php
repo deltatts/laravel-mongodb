@@ -409,9 +409,9 @@ class Builder extends QueryBuilder {
 
         if (1 == (int) $result['ok'])
         {
-            if (is_null($sequence))
+            if (is_null($sequence) || !isset($values[$sequence]))
             {
-                $sequence = '_id';
+                return $result['_id'];
             }
 
             // Return id
